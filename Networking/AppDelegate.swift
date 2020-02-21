@@ -15,6 +15,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        //https://samples.openweathermap.org/data/2.5?q=London,uk&
+
+        let manager = APIManager(baseURL: "https://samples.openweathermap.org/data/2.5")
+        let endpoint = TestEnpoint.weather(queryParams: ["q":"London", "appid":"b6907d289e10d714a6e88b30761fae22"])
+       
+        manager.makeApiCall(at: endpoint, for: WeatherResponse.self) { (result) in
+            switch result {
+            case .success(let w):
+                print(w)
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
         return true
     }
 
